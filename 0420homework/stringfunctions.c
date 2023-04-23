@@ -69,9 +69,10 @@ int myStrcmp(char str1[], char str2[])
 	}
 }
 
-char* myStrcat(char str1[], char str2[])
+char* myStrcat(char str1[], char str2[]) // 문자열은 배열취급으로, 배열은 매개변수로 받아올땐 무조건 포인터로 받아온다(str1[] == *str1)
 {
-	// char str[100] = {'a'}
+	char str[100] = { 0 };
+	char* pstr = &str;
 	int len1 = 0;
 	int len2 = 0;
 
@@ -83,11 +84,20 @@ char* myStrcat(char str1[], char str2[])
 	{
 		len2++;
 	}
+	//for (int i = len1; i < len1 + len2; i++)
+	//{
+	//	str1[i] = str2[i - len1];
+	//}
+	//str1[len1 + len2] = '\0'; // str1 을 변형하는 법 말고..?
+
+	for (int i = 0; i < len1; i++)
+	{
+		str[i] = str1[i];
+	}
 	for (int i = len1; i < len1 + len2; i++)
 	{
-		str1[i] = str2[i - len1];
+		str[i] = str2[i - len1];
 	}
-	str1[len1 + len2] = '\0'; // str1 을 변형하는 법 말고..?
 
-	return str1; // str로 받으려하면 쓰레기 값만 나옴
+	return pstr; // 함수가 포인터형이니까 return 값도 포인터형으로 해줘야 값을 제대로 출력할 수 있다.
 }
